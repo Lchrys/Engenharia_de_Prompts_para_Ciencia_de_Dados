@@ -1,0 +1,9 @@
+Critério;Por que importa neste caso;Como medir ou verificar;Peso
+Qualidade em português;Chamados têm gírias, erros de digitação e abreviações;Testar com 200 a 300 chamados reais anonimizados, rotulados por humanos, e medir acertos de assunto, sentimento e urgência;Alto
+Privacidade e LGPD;Os chamados contêm dados pessoais de clientes;Analisar contrato e política de dados: uso dos dados para treinamento, local de armazenamento, retenção, acordo de tratamento de dados, possibilidade de execução própria;Alto
+Custo;São 40 mil chamados por mês, de forma recorrente;Tokens por chamado (tarefa 5) × preço oficial por token, mais infraestrutura se for hospedado;Alto
+Consistência das respostas;O problema atual é classificar casos parecidos de modos diferentes;Repetir o mesmo chamado várias vezes e medir a variação, com configuração de baixa aleatoriedade;Alto
+Limite de contexto;Define quanto texto cabe por chamada (instrução, exemplos e chamado);Conferir na documentação do modelo e comparar com a média de tokens da tarefa 5;Médio
+Latência e capacidade de processamento;O lote mensal precisa terminar em horas, não em dias;Medir o tempo de uma amostra e extrapolar para 40 mil;Médio
+Facilidade de integração;Precisa conectar ao sistema de chamados;Verificar API, saída estruturada (JSON) e bibliotecas disponíveis;Médio
+Estabilidade do fornecedor;Modelos são atualizados e descontinuados;Verificar política de versões e prazos de descontinuação;Baixo

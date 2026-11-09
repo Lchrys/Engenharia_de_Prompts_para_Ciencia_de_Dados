@@ -1,0 +1,66 @@
+[
+  {
+    "regiao": "Baixada Fluminense",
+    "ano": 2024,
+    "roubo_veiculo": 10921,
+    "recuperacao_veiculos": 6138,
+    "furto_veiculos": 4451,
+    "roubo_carga": 1334
+  },
+  {
+    "regiao": "Baixada Fluminense",
+    "ano": 2025,
+    "roubo_veiculo": 8719,
+    "recuperacao_veiculos": 5030,
+    "furto_veiculos": 4504,
+    "roubo_carga": 1286
+  },
+  {
+    "regiao": "Capital",
+    "ano": 2024,
+    "roubo_veiculo": 17302,
+    "recuperacao_veiculos": 9960,
+    "furto_veiculos": 8872,
+    "roubo_carga": 1769
+  },
+  {
+    "regiao": "Capital",
+    "ano": 2025,
+    "roubo_veiculo": 13713,
+    "recuperacao_veiculos": 9148,
+    "furto_veiculos": 8680,
+    "roubo_carga": 1496
+  },
+  {
+    "regiao": "Grande Niteroi",
+    "ano": 2024,
+    "roubo_veiculo": 1939,
+    "recuperacao_veiculos": 1264,
+    "furto_veiculos": 1993,
+    "roubo_carga": 248
+  },
+  {
+    "regiao": "Grande Niteroi",
+    "ano": 2025,
+    "roubo_veiculo": 2058,
+    "recuperacao_veiculos": 1367,
+    "furto_veiculos": 2191,
+    "roubo_carga": 243
+  },
+  {
+    "regiao": "Interior",
+    "ano": 2024,
+    "roubo_veiculo": 768,
+    "recuperacao_veiculos": 1672,
+    "furto_veiculos": 2021,
+    "roubo_carga": 86
+  },
+  {
+    "regiao": "Interior",
+    "ano": 2025,
+    "roubo_veiculo": 745,
+    "recuperacao_veiculos": 1861,
+    "furto_veiculos": 2115,
+    "roubo_carga": 88
+  }
+]

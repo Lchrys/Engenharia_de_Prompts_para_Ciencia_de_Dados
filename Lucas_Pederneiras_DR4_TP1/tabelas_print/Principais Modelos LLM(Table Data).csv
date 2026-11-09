@@ -1,0 +1,7 @@
+Modelo e versão;Organização;Licença;Forma de acesso;Fonte oficial consultada;Data da consulta
+GPT-6 Astra;OpenAI;Proprietária;API;https://developers.openai.com/api/docs/models/gpt-6-astra;26/10/2026
+Claude Sonnet 5.5;Anthropic;Proprietária;API (Claude Platform) e aplicativos Claude;https://www.anthropic.com/claude-sonnet-5-5;26/10/2026
+Gemini 4 Argon;Google;Proprietária;Gemini API e Google AI Studio;https://ai.google.dev/gemini-api/docs/models/gemini-4-argon?hl=pt-br;26/10/2026
+Grok 4.7;SpaceXAI;Proprietária;Grok API, Grok Build, Cursor, ferramentas de terceiros e plataformas de nuvem;https://x.ai/news/grok-4-7;26/10/2026
+DeepSeek V4.1 Flash;DeepSeek;"Pesos para execução própria no Hugging Face; API da DeepSeek";"Pesos para execução própria no Hugging Face; API da DeepSeek (confirmada para o V4.1 Flash na página de lançamento)";https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017;26/10/2026
+Qwen3.8-Flash-Next;Qwen (Grupo Alibaba);qwen-community-1.0 (Qwen Community License 1.0);Pesos para execução própria no Hugging Face e no ModelScope;https://huggingface.co/Qwen/Qwen3.8-Flash-Next;26/10/2026
