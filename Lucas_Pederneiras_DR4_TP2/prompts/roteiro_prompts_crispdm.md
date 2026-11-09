@@ -1,6 +1,6 @@
 # Roteiro de prompts: CRISP-DM 
 
-Ferramenta: ChatGPT (OpenAI) | GPT-6 | 04/11/2026
+Ferramenta: ChatGPT (OpenAI) | GPT-6 Astra | 09/11/2026
 
 Todos os prompts seguem o molde PAPEL, CONTEXTO, TAREFA, DADOS, EXEMPLO DE FORMATO e FORMATO.
 
@@ -101,7 +101,7 @@ FORMATO
 FASE 3: Preparação dos dados
 
 PAPEL
-Você é analista de dados do ISP-RJ e vai apenas reformatar o quadro que eu já conferi no CSV. Não recálcule a partir de memória ou de outras fontes. Se um valor não estiver no quadro colado, escreva "NÃO CONFIRMADO". Eu validarei o JSON e o YAML com json.loads e yaml.safe_load, e conferirei os totais 30.930/25.235 (roubos) e 19.034/17.406 (recuperados).
+Você é analista de dados do ISP-RJ e vai apenas reformatar o quadro que eu já conferi no CSV. Não recalcule a partir de memória ou de outras fontes. Se um valor não estiver no quadro colado, escreva "NÃO CONFIRMADO". Eu validarei o JSON e o YAML com json.loads e yaml.safe_load, e conferirei os totais 30.930/25.235 (roubos) e 19.034/17.406 (recuperados).
 
 CONTEXTO
 O quadro abaixo soma, por região e ano, as colunas roubo_veiculo, recuperacao_veiculos, furto_veiculos e roubo_carga nos doze meses de 2024 e nos doze meses de 2025. A grafia de Grande Niterói já foi unificada. São 8 registros (4 regiões × 2 anos). A linha ESTADO é só conferência; não entra nos 8 registros. Este quadro, e não o CSV inteiro, é o que entra no chat: só o texto colado conta para tokens.
@@ -150,20 +150,22 @@ FORMATO
 
 ---
 
-## FASE 3b: correção do JSON/YAML (usar se a fase 3 falhar)
+## FASE 3 (correção)
+
+Usar só se o JSON ou o YAML da FASE 3 não passar na validação.
 
 ```
 FASE 3 (correção): Preparação dos dados
 
 PAPEL
-Você continua como analista de dados do ISP-RJ. Sua tarefa agora é só corrigir o JSON e o YAML da resposta anterior. Não invente valores novos.
+Você continua como analista de dados do ISP-RJ. Sua tarefa agora é só corrigir o JSON e o YAML da resposta anterior. Não invente valores novos. Eu conferirei de novo com json.loads e yaml.safe_load e os totais 30930, 19034, 25235 e 17406.
 
 CONTEXTO
-A resposta anterior não passou na validação. Erros típicos: aspas simples, separador de milhar, linha ESTADO incluída, número de registros diferente de 8, ou totais que não batem com 30930/25235 e 19034/17406. Eu conferi de novo o quadro colado na fase 3; ele permanece a única fonte.
+A resposta anterior não passou na validação. Erros típicos: aspas simples, separador de milhar, linha ESTADO incluída, número de registros diferente de 8, ou totais que não batem. O quadro colado na FASE 3 permanece a única fonte.
 
 TAREFA
 1. Reescreva o JSON válido com exatamente 8 objetos e inteiros sem separador. Resultado esperado: JSON que passe em json.loads.
-2. Reescreva o YAML equivalente. Resultado esperado: YAML que passe em yaml.safe_load e seja igual ao JSON.
+2. Reescreva o YAML equivalente, mesma ordem e mesmos valores. Resultado esperado: YAML que passe em yaml.safe_load e seja igual ao JSON.
 3. Recalcule os quatro totais a partir do JSON corrigido. Resultado esperado: 30930, 19034, 25235, 17406.
 4. Aponte, em uma frase cada, o erro da resposta anterior e a correção. Indique a origem de cada número ou escreva "NÃO CONFIRMADO".
 
@@ -171,13 +173,18 @@ DADOS
 Use exclusivamente o quadro da mensagem "FASE 3: Preparação dos dados".
 
 EXEMPLO DE FORMATO
-Não use os números da NT 14/2026. Devolva apenas JSON, YAML, totais e o registro do erro.
+Não use os números da NT 14/2026. Devolva apenas JSON, YAML, totais e o registro do erro. Os zeros abaixo são fictícios e não devem aparecer:
+
+[
+  {"regiao": "Capital", "ano": 2024, "roubo_veiculo": 0, "recuperacao_veiculos": 0, "furto_veiculos": 0, "roubo_carga": 0}
+]
 
 FORMATO
-- JSON RFC 8259, aspas duplas, 8 registros.
+- JSON RFC 8259, aspas duplas, 8 registros, sem ESTADO.
 - YAML equivalente.
-- Totais inteiros.
+- Totais inteiros, sem ponto de milhar.
 - Lista curta de correções.
+- Texto puro; sem LaTeX.
 ```
 
 ---
@@ -199,7 +206,7 @@ TAREFA
 3. Informe a participação de São Gonçalo nos roubos de veículos da Grande Niterói em 2025. Resultado esperado: "São Gonçalo responde por A dos B casos da região em 2025".
 4. Calcule a razão recuperados/roubados no estado em 2024 e em 2025 e explique, em uma frase, por que ela não é taxa de recuperação. Resultado esperado: duas porcentagens e a ressalva.
 5. Liste limites da análise (ocorrências versus crimes ocorridos; ausência de frota e população; ausência de causas). Resultado esperado: três limites.
-6. Mostre a conta de cada percentual (fórmula e valores) ou escreva "NÃO CONFIRMADO".
+6. Mostre a conta de cada percentual em uma linha de texto puro, no molde (depois - antes) / antes * 100 = Z%, com os inteiros sem ponto de milhar. Resultado esperado: uma linha por indicador, região, São Gonçalo e razão. Se faltar dado, escreva "NÃO CONFIRMADO". Não use LaTeX, fração, $$ nem fórmula renderizada.
 
 DADOS
 Quadro da fase 3 (já conferido). Totais ESTADO:
@@ -218,7 +225,8 @@ FORMATO
 - Português do Brasil.
 - Seções 2, 3 e 4 no tom da nota modelo.
 - Inteiros com ponto de milhar (30.930). Percentuais com uma casa decimal e vírgula (18,4%).
-- Contas visíveis no final.
+- Contas visíveis no final, cada uma em uma linha de teclado: numeros, +, -, /, *, = e %.
+- Proibido LaTeX, $$ , \\frac e qualquer fórmula desenhada.
 - Sem atribuição de causa.
 ```
 
@@ -237,7 +245,7 @@ Chegou um rascunho das seções 2 a 4, produzido na fase 4, mais o quadro de 8 r
 
 TAREFA
 1. Confira cada inteiro do rascunho contra o quadro da fase 3. Resultado esperado: tabela item a item com "confere" ou "não confere", citando o valor do quadro.
-2. Recalcule cada percentual com uma casa decimal. Resultado esperado: lista de percentuais conferidos.
+2. Recalcule cada percentual com uma casa decimal, em texto puro, uma linha por item, no molde (depois - antes) / antes * 100 = Z%. Confere. Resultado esperado: lista de percentuais conferidos, copiável. Não use LaTeX nem fórmula renderizada.
 3. Verifique se a razão foi chamada, indevidamente, de taxa de recuperação. Resultado esperado: sim ou não, com o trecho.
 4. Verifique se há cifra da NT 14/2026 (por exemplo 11.736, 13.430, 73,8%). Resultado esperado: sim ou não.
 5. Emita parecer: aprovar; devolver à FASE 3; ou devolver à FASE 4. Resultado esperado: um único parecer, com a lista do que deve ser corrigido.
@@ -256,6 +264,7 @@ Parecer: devolver à FASE 4 porque [motivo]."
 FORMATO
 - Português do Brasil.
 - Seções: conferência de inteiros; conferência de percentuais; linguagem da razão; contaminação pela nota modelo; parecer.
+- Conferência de percentuais em linhas de teclado (numeros, +, -, /, *, =, %). Proibido LaTeX, $$ e fração.
 - Sem texto corrido da nota.
 - Um parecer explícito no final.
 ```
@@ -276,7 +285,7 @@ O revisor técnico da fase 5 devolveu a análise. O quadro da fase 3 permanece v
 TAREFA
 1. Reescreva as seções 2, 3 e 4 já corrigidas, no formato da nota modelo. Resultado esperado: texto corrido das três seções.
 2. Mantenha inteiros e percentuais que conferem; altere apenas o que o revisor apontou. Resultado esperado: lista curta do que mudou.
-3. Mostre a origem de cada número ou escreva "NÃO CONFIRMADO".
+3. Mostre a origem de cada número ou escreva "NÃO CONFIRMADO". Se repetir contas, use texto puro: (depois - antes) / antes * 100 = Z%. Sem LaTeX.
 
 DADOS
 Quadro da fase 3 e apontamentos da fase 5, já neste chat.
@@ -301,17 +310,17 @@ PAPEL
 Você é analista de dados do ISP-RJ e redige a versão para conferência. Helena Prado é a leitora. O texto é rascunho até eu conferir cada número contra o CSV. Não invente, não arredonde além de uma casa decimal nos percentuais e não atribua causas. Não escreva nomes de pessoas reais.
 
 CONTEXTO
-A estrutura obrigatória é o esqueleto hierárquico da fase 1. Os números obrigatórios são os do quadro da fase 3, já conferidos, e a análise corrigida após a fase 5. O resumo executivo tem no máximo 70 palavras e só pode repetir informação que já apareça nas seções 1 a 6: não acrescente município, conclusão ou cifra que o texto principal não tenha dito. O cabeçalho deve trazer a data 4 de novembro de 2026 e a declaração de que o texto foi redigido com apoio de IA e conferido contra o CSV do ISP-RJ. Deixe um espaço para o nome do autor; eu o colocarei no Word.
+A estrutura obrigatória é o esqueleto hierárquico da fase 1. Os números obrigatórios são os do quadro da fase 3, já conferidos, e a análise corrigida após a fase 5. O resumo executivo tem no máximo 70 palavras e só pode repetir informação que já apareça nas seções 1 a 6: não acrescente município, conclusão ou cifra que o texto principal não tenha dito. O cabeçalho deve trazer a data 9 de novembro de 2026 e a declaração de que o texto foi redigido com apoio de IA e conferido contra o CSV do ISP-RJ. Deixe um espaço para o nome do autor; eu o colocarei no Word.
 
 TAREFA
 1. Escreva o cabeçalho (nota interna, data, declaração de uso de IA, espaço para o autor) e o assunto exatamente: "roubos e recuperação de veículos no estado do Rio de Janeiro, 2025 em comparação com 2024". Resultado esperado: cabeçalho + assunto.
 2. Escreva o resumo executivo com no máximo 70 palavras, restrito ao texto principal. Resultado esperado: um parágrafo e a contagem de palavras.
 3. Redija as seções 1 a 6 seguindo rigorosamente o esqueleto da fase 1, no tom da NT 14/2026, com os quatro indicadores. Resultado esperado: texto corrido das seis seções.
 4. Inclua a fonte no formato: INSTITUTO DE SEGURANÇA PÚBLICA (Rio de Janeiro). Estatísticas de segurança pública: série histórica mensal por área de delegacia desde 01/2003 (arquivo BaseDPEvolucaoMensalCisp.csv). Rio de Janeiro: ISP, [2026]. Disponível em: https://www.ispdados.rj.gov.br/estatistica.html. Acesso em: 21 out. 2026.
-5. Faça a conferência final: liste os inteiros usados e a origem (linha do quadro) ou escreva "NÃO CONFIRMADO". Resultado esperado: lista de conferência.
+5. Faça a conferência final: liste os inteiros usados e a origem (linha do quadro) ou escreva "NÃO CONFIRMADO". Resultado esperado: lista de conferência em texto puro, sem LaTeX.
 
 DADOS
-Quadro da fase 3, análise corrigida da fase 4 e parecer da fase 5, já neste chat. Data: 4 de novembro de 2026.
+Quadro da fase 3, análise corrigida da fase 4 e parecer da fase 5, já neste chat. Data: 9 de novembro de 2026.
 
 EXEMPLO DE FORMATO
 Siga o tom da NT 14/2026 (seções 1 a 6, frases curtas, percentuais com uma casa decimal). Não copie os números dela (11.736, 13.430, 14,4%, 73,8% etc.).
@@ -324,16 +333,3 @@ FORMATO
 - Sem causas de política ou operação.
 - Sem nomes de pessoas reais.
 ```
-
----
-
-## Tabela de correções do modelo
-
-Preencha depois de cada resposta do ChatGPT. Deixe em branco o que não ocorreu.
-
-| Fase | Erro do modelo | Como foi detectado | Correção aplicada |
-| --- | --- | --- | --- |
-| 3 |  |  |  |
-| 4 |  |  |  |
-| 5 |  |  |  |
-| 6 |  |  |  |
